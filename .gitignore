@@ -7,6 +7,8 @@
 /client//test/e2e/reports/
 /client/selenium-debug.log
 
+/server/db/database.db
+
 # Editor directories and files
 .idea
 .vscode

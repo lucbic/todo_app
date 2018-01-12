@@ -9,8 +9,6 @@
 import TodoList from './components/TodoList';
 import CreateTodo from './components/CreateTodo';
 
-const url = 'https://localhost:9393/';
-
 export default {
   components: {
     TodoList,
@@ -19,7 +17,23 @@ export default {
   // data function avails data to the template
   data() {
     return {
-      todos: [],
+      todos: [{
+        title: 'Todo A',
+        project: 'Projeto A',
+        done: false,
+      }, {
+        title: 'Todo B',
+        project: 'Projeto B',
+        done: true,
+      }, {
+        title: 'Todo C',
+        project: 'Projeto C',
+        done: false,
+      }, {
+        title: 'Todo D',
+        project: 'Projeto D',
+        done: false,
+      }],
     };
   },
   methods: {
@@ -29,12 +43,6 @@ export default {
         project: todo.project,
         done: todo.done,
       });
-    },
-    getTodos() {
-      axios.post(url + '/todos')
-           .then(function(response) {
-             this.todos << response.data;
-           });
     },
   },
 };

@@ -14,9 +14,11 @@
 ActiveRecord::Schema.define(version: 20180111192723) do
 
   create_table "todos", force: :cascade do |t|
-    t.string  "title"
-    t.string  "project"
-    t.boolean "done"
+    t.string   "title"
+    t.string   "project"
+    t.boolean  "done"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
