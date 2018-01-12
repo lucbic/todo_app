@@ -9,8 +9,6 @@
 import TodoList from './components/TodoList';
 import CreateTodo from './components/CreateTodo';
 
-// const url = 'https://localhost:9393/';
-
 export default {
   components: {
     TodoList,
@@ -20,19 +18,19 @@ export default {
   data() {
     return {
       todos: [{
-        title: 'Título A',
+        title: 'Todo A',
         project: 'Projeto A',
         done: false,
       }, {
-        title: 'Título B',
+        title: 'Todo B',
         project: 'Projeto B',
         done: true,
       }, {
-        title: 'Título C',
+        title: 'Todo C',
         project: 'Projeto C',
         done: false,
       }, {
-        title: 'Título D',
+        title: 'Todo D',
         project: 'Projeto D',
         done: false,
       }],
