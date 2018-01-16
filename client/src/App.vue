@@ -20,7 +20,7 @@ export default {
   // data function avails data to the template
   data() {
     return {
-      todos: this.getTodo(),
+      todos: this.getTodos(),
       status: '',
     };
   },
@@ -43,7 +43,7 @@ export default {
         this.status = `an error ocurred: ${error}`;
       });
     },
-    getTodo() {
+    getTodos() {
       axios.get(`${url}/todos`)
       .then((response) => {
         this.todos = response.data;
@@ -54,8 +54,6 @@ export default {
     },
   },
 };
-
-// this.getTodo();
 </script>
 
 <style>

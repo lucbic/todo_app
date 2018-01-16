@@ -61,7 +61,7 @@ class App < Sinatra::Base
     content_type :json
     @todo = Todo.find(params[:id].to_i)
     if @todo.destroy
-      {:success => "ok"}.to_json
+      halt 204
     else
       halt 422
     end

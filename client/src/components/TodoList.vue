@@ -28,10 +28,8 @@ export default {
     deleteTodo(todo) {
       axios.delete(`${url}/todo/${todo.id}`)
       .then((response) => {
-        if (response.data.success === 'ok') {
-          const todoIndex = this.todos.indexOf(todo);
-          this.todos.splice(todoIndex, 1);
-        }
+        const todoIndex = this.todos.indexOf(todo);
+        this.todos.splice(todoIndex, 1);
       })
       .catch((error) => {
         this.status = `an error ocurred: ${error}`;
