@@ -6,8 +6,11 @@
 </template>
 
 <script>
+import axios from 'axios';
 import TodoList from './components/TodoList';
 import CreateTodo from './components/CreateTodo';
+
+const url = 'http://localhost:9393';
 
 export default {
   components: {
@@ -17,35 +20,42 @@ export default {
   // data function avails data to the template
   data() {
     return {
-      todos: [{
-        title: 'Todo A',
-        project: 'Projeto A',
-        done: false,
-      }, {
-        title: 'Todo B',
-        project: 'Projeto B',
-        done: true,
-      }, {
-        title: 'Todo C',
-        project: 'Projeto C',
-        done: false,
-      }, {
-        title: 'Todo D',
-        project: 'Projeto D',
-        done: false,
-      }],
+      todos: this.getTodo(),
+      status: '',
     };
   },
   methods: {
     addTodo(todo) {
-      this.todos.push({
+      axios.post(`${url}/todo`, {
         title: todo.title,
         project: todo.project,
         done: todo.done,
+      })
+      .then((response) => {
+        this.todos.push({
+          id: response.data.id,
+          title: response.data.title,
+          project: response.data.project,
+          done: response.data.done,
+        });
+      })
+      .catch((error) => {
+        this.status = `an error ocurred: ${error}`;
+      });
+    },
+    getTodo() {
+      axios.get(`${url}/todos`)
+      .then((response) => {
+        this.todos = response.data;
+      })
+      .catch((error) => {
+        this.status = `an error ocurred: ${error}`;
       });
     },
   },
 };
+
+// this.getTodo();
 </script>
 
 <style>

@@ -9,6 +9,23 @@ end
 
 class App < Sinatra::Base
 
+  #CORS SETTINGS
+  set :bind, '0.0.0.0'
+  configure do
+    enable :cross_origin
+  end
+
+  before do
+    response.headers['Access-Control-Allow-Origin'] = '*'
+  end
+
+  options "*" do
+    response.headers["Access-Control-Allow-Methods"] = "HEAD,GET,POST,DELETE,PATCH,OPTIONS"
+    response.headers["Access-Control-Allow-Headers"] = "X-Requested-With, X-HTTP-Method-Override, Content-Type, Cache-Control, Accept"
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    200
+  end
+
   # CREATE
   post '/todo' do
     content_type :json
