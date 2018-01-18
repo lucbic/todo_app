@@ -2,55 +2,37 @@
   <div>
     <todo-list v-bind:todos="todos"></todo-list>
     <create-todo v-on:create-todo="addTodo"></create-todo>
+    <p v-show="!status"> {{ status }} </p>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
 import TodoList from './components/TodoList';
 import CreateTodo from './components/CreateTodo';
-
-const url = 'http://localhost:9393';
 
 export default {
   components: {
     TodoList,
     CreateTodo,
   },
+  computed: {
+    todos() {
+      return this.$store.state.todos;
+    },
+  },
   // data function avails data to the template
   data() {
     return {
-      todos: this.getTodos(),
       status: '',
     };
   },
   methods: {
     addTodo(todo) {
-      axios.post(`${url}/todo`, {
-        title: todo.title,
-        project: todo.project,
-        done: todo.done,
-      })
-      .then((response) => {
-        this.todos.push({
-          id: response.data.id,
-          title: response.data.title,
-          project: response.data.project,
-          done: response.data.done,
-        });
-      })
-      .catch((error) => {
-        this.status = `an error ocurred: ${error}`;
-      });
-    },
-    getTodos() {
-      axios.get(`${url}/todos`)
-      .then((response) => {
-        this.todos = response.data;
-      })
-      .catch((error) => {
-        this.status = `an error ocurred: ${error}`;
-      });
+      if (todo.title.trim() && todo.project.trim()) {
+        this.$store.commit('addTodo', { todo });
+      } else {
+        this.status = 'Blank title or project';
+      }
     },
   },
 };

@@ -14,10 +14,8 @@
 </template>
 
 <script type = "text/javascript" >
-import axios from 'axios';
+import { mapMutations } from 'vuex';
 import Todo from './Todo';
-
-const url = 'http://localhost:9393';
 
 export default {
   props: ['todos'],
@@ -25,36 +23,11 @@ export default {
     Todo,
   },
   methods: {
-    deleteTodo(todo) {
-      axios.delete(`${url}/todo/${todo.id}`)
-      .then((response) => {
-        const todoIndex = this.todos.indexOf(todo);
-        this.todos.splice(todoIndex, 1);
-      })
-      .catch((error) => {
-        this.status = `an error ocurred: ${error}`;
-      });
-    },
-    toggleTodo(todo) {
-      const todoToggle = todo;
-      todoToggle.done = !todo.done;
-      axios.patch(`${url}/todo/${todo.id}`, todoToggle)
-      .then(() => {
-        //
-      })
-      .catch((error) => {
-        this.status = `an error ocurred: ${error}`;
-      });
-    },
-    editTodo(todo) {
-      axios.patch(`${url}/todo/${todo.id}`, todo)
-      .then(() => {
-        //
-      })
-      .catch((error) => {
-        this.status = `an error ocurred: ${error}`;
-      });
-    },
+    ...mapMutations([
+      'editTodo',
+      'toggleTodo',
+      'deleteTodo',
+    ]),
   },
 };
 </script>
