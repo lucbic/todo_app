@@ -18,7 +18,7 @@ export const mutations = {
       state.status = `Could not retrieve data from server. ${error}`;
     });
   },
-  ADD_TODO(state, { payload }) {
+  ADD_TODO(state, payload) {
     axios.post(`${url}/todo`, {
       title: payload.title,
       project: payload.project,
@@ -38,7 +38,7 @@ export const mutations = {
     });
   },
 
-  DELETE_TODO(state, { payload }) {
+  DELETE_TODO(state, payload) {
     axios.delete(`${url}/todo/${payload.id}`)
     .then(() => {
       const todoIndex = state.todos.indexOf(payload);
@@ -50,7 +50,7 @@ export const mutations = {
     });
   },
 
-  TOGGLE_TODO(state, { payload }) {
+  TOGGLE_TODO(state, payload) {
     const todoToggle = payload;
     todoToggle.done = !payload.done;
     axios.patch(`${url}/todo/${payload.id}`, todoToggle)
@@ -62,7 +62,7 @@ export const mutations = {
     });
   },
 
-  EDIT_TODO(state, { payload }) {
+  EDIT_TODO(state, payload) {
     axios.patch(`${url}/todo/${payload.id}`, payload)
     .then(() => {
       state.status = '';

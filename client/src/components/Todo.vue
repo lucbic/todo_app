@@ -58,14 +58,14 @@
         this.isEditing = true;
       },
       hideForm(payload) {
-        this.$store.commit('EDIT_TODO', { payload });
+        this.$store.commit('EDIT_TODO', payload);
         this.isEditing = false;
       },
       deleteTodo(payload) {
-        this.$store.commit('DELETE_TODO', { payload });
+        this.$store.commit('DELETE_TODO', payload);
       },
       toggleTodo(payload) {
-        this.$store.commit('TOGGLE_TODO', { payload });
+        this.$store.commit('TOGGLE_TODO', payload);
       },
     },
   };

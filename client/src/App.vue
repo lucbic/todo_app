@@ -1,6 +1,6 @@
 <template>
   <div>
-    <todo-list v-bind:todos="todos"></todo-list>
+    <todo-list></todo-list>
     <create-todo></create-todo>
     <div class='ui basic content center aligned segment' id='error'>
       <p v-show="status"> {{ status }} </p>
@@ -18,9 +18,6 @@ export default {
     CreateTodo,
   },
   computed: {
-    todos() {
-      return this.$store.state.todos;
-    },
     status() {
       return this.$store.state.status;
     },

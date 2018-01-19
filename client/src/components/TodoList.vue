@@ -17,9 +17,13 @@
 import Todo from './Todo';
 
 export default {
-  props: ['todos'],
   components: {
     Todo,
+  },
+  computed: {
+    todos() {
+      return this.$store.state.todos;
+    },
   },
 };
 </script>

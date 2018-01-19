@@ -54,7 +54,7 @@ export default {
         const title = this.titleText;
         const project = this.projectText;
         const payload = { title, project, done: false };
-        this.$store.commit('ADD_TODO', { payload });
+        this.$store.commit('ADD_TODO', payload);
         this.isCreating = false;
       } else {
         this.$store.commit('CHANGE_STATUS', 'Blank title or project');
