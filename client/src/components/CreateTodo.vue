@@ -40,22 +40,25 @@ export default {
   methods: {
     openForm() {
       this.isCreating = true;
+      this.titleText = '';
+      this.projectText = '';
     },
     closeForm() {
       this.isCreating = false;
+      this.titleText = '';
+      this.projectText = '';
+      this.$store.commit('CHANGE_STATUS', '');
     },
     sendForm() {
       if (this.titleText.length > 0 && this.projectText.length > 0) {
         const title = this.titleText;
         const project = this.projectText;
-        this.$emit('create-todo', {
-          title,
-          project,
-          done: false,
-        });
-        this.newTodoText = '';
+        const payload = { title, project, done: false };
+        this.$store.commit('ADD_TODO', { payload });
+        this.isCreating = false;
+      } else {
+        this.$store.commit('CHANGE_STATUS', 'Blank title or project');
       }
-      this.isCreating = false;
     },
   },
 };

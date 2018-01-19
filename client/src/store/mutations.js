@@ -3,75 +3,77 @@ import axios from 'axios';
 
 const url = 'http://localhost:9393';
 
-export const STORAGE_KEY = 'todos-vuejs';
-
-// for testing
-if (navigator.userAgent.indexOf('PhantomJS') > -1) {
-  window.localStorage.clear();
-}
-
 export const state = {
-  todos:
-    axios.get(`${url}/todos`)
-    .then((response) => {
-      this.todos = response.data;
-    })
-    .catch((error) => {
-      this.status = `an error ocurred: ${error}`;
-    })
+  todos: [],
+  status: '',
 };
 
 export const mutations = {
-  addTodo(state, { todo }) {
+  GET_TODOS(state) {
+    axios.get(`${url}/todos`)
+    .then((response) => {
+      state.todos = response.data;
+    })
+    .catch((error) => {
+      state.status = `Could not retrieve data from server. ${error}`;
+    });
+  },
+  ADD_TODO(state, { payload }) {
     axios.post(`${url}/todo`, {
-      title: todo.title,
-      project: todo.project,
-      done: todo.done,
+      title: payload.title,
+      project: payload.project,
+      done: payload.done,
     })
     .then((response) => {
-      this.todos.push({
+      state.todos.push({
         id: response.data.id,
         title: response.data.title,
         project: response.data.project,
         done: response.data.done,
       });
+      state.status = '';
     })
     .catch((error) => {
-      this.status = `an error ocurred: ${error}`;
+      state.status = `Could not create task. ${error}`;
     });
   },
 
-  deleteTodo(state, { todo }) {
-    axios.delete(`${url}/todo/${todo.id}`)
+  DELETE_TODO(state, { payload }) {
+    axios.delete(`${url}/todo/${payload.id}`)
     .then(() => {
-      const todoIndex = this.todos.indexOf(todo);
-      this.todos.splice(todoIndex, 1);
+      const todoIndex = state.todos.indexOf(payload);
+      state.todos.splice(todoIndex, 1);
+      state.status = '';
     })
     .catch((error) => {
-      this.status = `an error ocurred: ${error}`;
+      state.status = `Could not delete task. ${error}`;
     });
   },
 
-  toggleTodo(state, { todo }) {
-    const todoToggle = todo;
-    todoToggle.done = !todo.done;
-    axios.patch(`${url}/todo/${todo.id}`, todoToggle)
+  TOGGLE_TODO(state, { payload }) {
+    const todoToggle = payload;
+    todoToggle.done = !payload.done;
+    axios.patch(`${url}/todo/${payload.id}`, todoToggle)
     .then(() => {
-      //
+      state.status = '';
     })
     .catch((error) => {
-      this.status = `an error ocurred: ${error}`;
+      state.status = `Could not toggle task. ${error}`;
     });
   },
 
-  editTodo(state, { todo, value }) {
-    axios.patch(`${url}/todo/${todo.id}`, todo)
+  EDIT_TODO(state, { payload }) {
+    axios.patch(`${url}/todo/${payload.id}`, payload)
     .then(() => {
-      //
+      state.status = '';
     })
     .catch((error) => {
-      this.status = `an error ocurred: ${error}`;
+      state.status = `Could not edit task. ${error}`;
     });
+  },
+
+  CHANGE_STATUS(state, message) {
+    state.status = message;
   },
 
 };

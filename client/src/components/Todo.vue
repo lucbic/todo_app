@@ -22,16 +22,16 @@
     <div class="content" v-show="isEditing">
       <div class='ui form'>
         <div class='field'>
-          <label>Title</label>
+          <label>Título</label>
           <input type='text' v-model="todo.title" >
         </div>
         <div class='field'>
-          <label>Project</label>
+          <label>Projeto</label>
           <input type='text' v-model="todo.project" >
         </div>
         <div class='ui two button attached buttons'>
           <button class='ui basic blue button' v-on:click="hideForm(todo)">
-            Close X
+            Fechar X
           </button>
         </div>
       </div>
@@ -57,15 +57,15 @@
       showForm() {
         this.isEditing = true;
       },
-      hideForm(todo) {
-        this.$emit('edit-todo', todo);
+      hideForm(payload) {
+        this.$store.commit('EDIT_TODO', { payload });
         this.isEditing = false;
       },
-      deleteTodo(todo) {
-        this.$emit('delete-todo', todo);
+      deleteTodo(payload) {
+        this.$store.commit('DELETE_TODO', { payload });
       },
-      toggleTodo(todo) {
-        this.$emit('toggle-todo', todo);
+      toggleTodo(payload) {
+        this.$store.commit('TOGGLE_TODO', { payload });
       },
     },
   };

@@ -1,8 +1,10 @@
 <template>
   <div>
     <todo-list v-bind:todos="todos"></todo-list>
-    <create-todo v-on:create-todo="addTodo"></create-todo>
-    <p v-show="!status"> {{ status }} </p>
+    <create-todo></create-todo>
+    <div class='ui basic content center aligned segment' id='error'>
+      <p v-show="status"> {{ status }} </p>
+    </div>
   </div>
 </template>
 
@@ -19,21 +21,12 @@ export default {
     todos() {
       return this.$store.state.todos;
     },
-  },
-  // data function avails data to the template
-  data() {
-    return {
-      status: '',
-    };
-  },
-  methods: {
-    addTodo(todo) {
-      if (todo.title.trim() && todo.project.trim()) {
-        this.$store.commit('addTodo', { todo });
-      } else {
-        this.status = 'Blank title or project';
-      }
+    status() {
+      return this.$store.state.status;
     },
+  },
+  created() {
+    this.$store.commit('GET_TODOS');
   },
 };
 </script>
@@ -46,5 +39,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+#error {
+  color: red;
 }
 </style>
